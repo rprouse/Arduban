@@ -1,6 +1,6 @@
 {
     "board": "arduino:avr:leonardo",
     "port": "COM22",
-    "sketch": "Arduban.ino",
-    "output": "../build"
+    "sketch": "Arduban/Arduban.ino",
+    "output": "./build"
 }
