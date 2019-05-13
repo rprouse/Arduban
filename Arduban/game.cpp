@@ -178,12 +178,14 @@ void levelSolved()
     arduboy.println("Press A");
     if(arduboy.justPressed(A_BUTTON))
     {
-        if(level = MAX_LEVELS)
-            gameState = STATE_GAME_OVER;
-        else
+        if(level < MAX_LEVELS)
         {
             level++;
             gameState = STATE_LEVEL_INIT;
+        }
+        else
+        {
+            gameState = STATE_GAME_OVER;
         }
     }
 }
