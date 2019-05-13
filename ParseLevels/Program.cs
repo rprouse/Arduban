@@ -7,6 +7,8 @@ namespace ParseLevels
 {
     class Program
     {
+        static Dictionary<char, byte> TileMap { get; } = CreateTileMap();
+
         static void Main(string[] args)
         {
             if(args.Length != 1 || !File.Exists(args[0]))
@@ -59,14 +61,18 @@ namespace ParseLevels
             // Switch to landscape mode for the arduboy wide screen
             bool rotate = height > width;
 
-            char[,] level = new char[8,16];
+            byte[,] level = new byte[8,16];
             for(int row = 0; row < 8; row++)
             {
                 for(int col = 0; col < 16; col++)
                 {
-                    level[row,col] = ' ';
+                    level[row,col] = 0x07;  // FLOOR
                 }
             }
+
+            // Center the puzzles
+            int r_off = rotate ? (8 - width) / 2 : (8 - height) / 2;
+            int c_off = rotate ? (16 - height) / 2 : (16 - width) / 2;
 
             int r = 0;
             foreach(string row in puzzle)
@@ -74,9 +80,9 @@ namespace ParseLevels
                 for(int c = 0; c < row.Length; c++)
                 {
                     if(rotate)
-                        level[c, r] = row[c];
+                        level[c + r_off, r + c_off] = TileMap[row[c]];
                     else
-                        level[r, c] = row[c];
+                        level[r + r_off, c + c_off] = TileMap[row[c]];
                 }
                 r++;
             }
@@ -87,7 +93,7 @@ namespace ParseLevels
             {
                 for(int col = 0; col < 16; col++)
                 {
-                    Console.Write($"'{level[row,col]}', ");
+                    Console.Write($"0x{level[row,col]:X2}, ");
                 }
                 Console.WriteLine();
             }
@@ -96,5 +102,17 @@ namespace ParseLevels
 
         static int longestLine(IEnumerable<string> puzzle) =>
             puzzle.Max(s => s.Length);
+
+        static Dictionary<char, byte> CreateTileMap() =>
+            new Dictionary<char, byte>
+            {
+                {'#', 0x01},    // WALL
+                {'@', 0x02},    // PLAYER
+                {'+', 0x03},    // PLAYER_ON_GOAL
+                {'$', 0x04},    // BOX
+                {'*', 0x05},    // BOX_ON_GOAL
+                {'.', 0x06},    // GOAL
+                {' ', 0x07}     // FLOOR
+            };
     }
 }
