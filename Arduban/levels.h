@@ -3,8 +3,6 @@
 
 #include "globals.h"
 
-#define MAX_LEVELS 2
-
 const char levels[MAX_LEVELS][ROWS][COLUMNS] PROGMEM = {
     {   // Microban level 1
         {' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '},
