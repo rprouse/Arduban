@@ -49,14 +49,35 @@ namespace ParseLevels
 
         static void ParsePuzzle(string pack, string name, List<string> puzzle)
         {
+            byte[,] level = GetLevel(puzzle);
+            if(level == null)
+            {
+                return;
+            }
+
+            Console.WriteLine($"// {pack} level {name}");
+            Console.WriteLine();
+            for(int row = 0; row < 8; row++)
+            {
+                for(int col = 0; col < 16; col++)
+                {
+                    Console.Write($"0x{level[row,col]:X2}, ");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+        }
+
+        static byte[,] GetLevel(List<string> puzzle)
+        {
             int width = longestLine(puzzle);
             int height = puzzle.Count;
 
             if(width > 16 || height > 16)
-                return;
+                return null;
 
             if(width > 8 && height > 8)
-                return;
+                return null;
 
             // Switch to landscape mode for the arduboy wide screen
             bool rotate = height > width;
@@ -86,18 +107,7 @@ namespace ParseLevels
                 }
                 r++;
             }
-
-            Console.WriteLine($"// {pack} level {name}");
-            Console.WriteLine();
-            for(int row = 0; row < 8; row++)
-            {
-                for(int col = 0; col < 16; col++)
-                {
-                    Console.Write($"0x{level[row,col]:X2}, ");
-                }
-                Console.WriteLine();
-            }
-            Console.WriteLine();
+            return level;
         }
 
         static int longestLine(IEnumerable<string> puzzle) =>
