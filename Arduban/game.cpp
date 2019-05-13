@@ -3,7 +3,7 @@
 #include "images.h"
 
 // The current board/level we are playing
-char board[ROWS][COLUMNS];
+byte board[ROWS][COLUMNS];
 uint16_t moves = 0;
 
 // Player column and row
