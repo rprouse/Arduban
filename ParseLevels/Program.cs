@@ -46,6 +46,7 @@ namespace ParseLevels
                     line = file.ReadLine();
                 }
             }
+            OutputLevels();
         }
 
         static void ParsePuzzle(string pack, string name, List<string> puzzle)
@@ -55,6 +56,16 @@ namespace ParseLevels
             {
                 OutputLevel(pack, name, level);
             }
+        }
+
+        static void OutputLevels()
+        {
+            Console.WriteLine("const char* const levels[] PROGMEM = {");
+            for(int l = 1; l < Count; l++)
+            {
+                Console.WriteLine($"    Level{l,3:000},");
+            }
+            Console.WriteLine("};");
         }
 
         static void OutputLevel(string pack, string name, byte[,] level)
