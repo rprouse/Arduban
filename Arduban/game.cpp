@@ -3,6 +3,7 @@
 
 // The current board/level we are playing
 char board[ROWS][COLUMNS];
+uint16_t moves = 0;
 
 // Player column and row
 int8_t pr = 0;
@@ -56,6 +57,7 @@ void move(int8_t x, int8_t y)
     board[pr][pc] = board[pr][pc] == PLAYER_ON_GOAL ? GOAL : FLOOR;
     pr = r;
     pc = c;
+    moves++;
 }
 
 void move()
@@ -69,7 +71,23 @@ void move()
     else if(arduboy.justPressed(LEFT_BUTTON))
         move(-1, 0);
     else if(arduboy.justPressed(A_BUTTON))
-        gameState = STATE_GAME_OVER;
+        gameState = STATE_LEVEL_INIT;
+    else if(arduboy.justPressed(B_BUTTON))
+        gameState = STATE_GAME_INTRO;
+}
+
+bool isSolved()
+{
+    // Make sure all boxes are on goals
+    for(int8_t r = 0; r < ROWS; r++)
+    {
+        for(int8_t c = 0; c < COLUMNS; c++)
+        {
+            if(board[r][c] == BOX)
+                return false;
+        }
+    }
+    return true;
 }
 
 void drawBoard()
@@ -112,10 +130,38 @@ void loadLevel()
     }
     findPlayer();
     gameState = STATE_GAME_PLAY;
+    moves = 0;
 }
 
 void gamePlay()
 {
     move();
+    if(isSolved())
+    {
+        gameState = STATE_LEVEL_SOLVED;
+    }
     drawBoard();
+}
+
+void levelSolved()
+{
+    arduboy.setCursor(0, 10);
+    arduboy.print("Level ");
+    arduboy.print(level);
+    arduboy.println(" solved in");
+    arduboy.println();
+    arduboy.print(moves);
+    arduboy.println(" moves!");
+    arduboy.println();
+    arduboy.println("Press A");
+    if(arduboy.justPressed(A_BUTTON))
+    {
+        if(level = MAX_LEVELS)
+            gameState = STATE_GAME_OVER;
+        else
+        {
+            level++;
+            gameState = STATE_LEVEL_INIT;
+        }
+    }
 }

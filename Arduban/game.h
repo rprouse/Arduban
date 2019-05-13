@@ -13,5 +13,6 @@
 
 void loadLevel();
 void gamePlay();
+void levelSolved();
 
 #endif

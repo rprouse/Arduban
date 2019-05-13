@@ -13,6 +13,7 @@ const FunctionPointer PROGMEM gameStates[] = {
   gameIntro,
   loadLevel,
   gamePlay,
+  levelSolved,
   gameOver
 };
 
