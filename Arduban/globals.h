@@ -19,5 +19,6 @@ extern Arduboy2 arduboy;
 extern Sprites sprites;
 extern byte gameState;
 extern uint8_t level;
+extern uint8_t frame;
 
 #endif

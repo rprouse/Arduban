@@ -33,4 +33,6 @@ void loop()
   arduboy.clear();
   ((FunctionPointer)pgm_read_word(&gameStates[gameState]))();
   arduboy.display();
+
+  frame++;
 }

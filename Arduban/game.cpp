@@ -105,7 +105,7 @@ void drawBoard()
                 break;
             case PLAYER:
             case PLAYER_ON_GOAL:
-                sprites.drawSelfMasked(x, y, Player, 0);
+                sprites.drawSelfMasked(x, y, Player, frame / 20 % 4);
                 break;
             case WALL:
                 sprites.drawSelfMasked(x, y, Wall, 0);
@@ -114,10 +114,10 @@ void drawBoard()
                 sprites.drawSelfMasked(x, y, Box, 0);
                 break;
             case BOX_ON_GOAL:
-                sprites.drawSelfMasked(x, y, BoxOnGoal, 0);
+                sprites.drawSelfMasked(x, y, BoxOnGoal, frame / 30 % 2);
                 break;
             case GOAL:
-                sprites.drawSelfMasked(x, y, Goal, 0);
+                sprites.drawSelfMasked(x, y, Goal, frame / 15 % 4);
                 break;
             }
         }
