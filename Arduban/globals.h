@@ -13,14 +13,13 @@
 #define STATE_LEVEL_SOLVED  3
 #define STATE_GAME_OVER     4
 
-#define MAX_LEVELS 2
-
 #define COLUMNS            16
 #define ROWS                8
 
 extern Arduboy2 arduboy;
 extern Sprites sprites;
 extern byte gameState;
+extern uint8_t max_levels;
 extern uint8_t level;
 extern uint8_t frame;
 

@@ -13,6 +13,6 @@ void gameIntro()
         gameState = STATE_LEVEL_INIT;
     else if(arduboy.justPressed(UP_BUTTON) && level > 1)
         level--;
-    else if(arduboy.justPressed(DOWN_BUTTON) && level < MAX_LEVELS)
+    else if(arduboy.justPressed(DOWN_BUTTON) && level < max_levels)
         level++;
 }
