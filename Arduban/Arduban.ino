@@ -18,6 +18,7 @@ const FunctionPointer PROGMEM gameStates[] = {
 
 void setup()
 {
+  // Serial.begin(9600);  // For debugging :)
   arduboy.begin();
   arduboy.setFrameRate(60);
 }

@@ -8,39 +8,54 @@ char board[ROWS][COLUMNS];
 int8_t pr = 0;
 int8_t pc = 0;
 
+bool offScreen(int8_t r, int8_t c)
+{
+    return (r == -1 || r == ROWS || c == -1 || c == COLUMNS);
+}
+
 void move(int8_t x, int8_t y)
 {
     int8_t r = pr + y;
     int8_t c = pc + x;
 
-    // Off the screen?
-    if(r == -1 || r == ROWS || c == -1 || c == COLUMNS)
+    if(offScreen(r,c))
         return;
 
     switch (board[r][c])
     {
     case WALL:
         return;
+    case FLOOR:
+        board[r][c] = PLAYER;
+        break;
+    case GOAL:
+        board[r][c] = PLAYER_ON_GOAL;
+        break;
     case BOX:
     case BOX_ON_GOAL:
         // Need to look one square further then push box
+        uint8_t r2 = r + y;
+        uint8_t c2 = c + x;
+
+        if(offScreen(r2,c2))
+            return;
+
+        if(board[r2][c2] == WALL || board[r2][c2] == BOX || board[r2][c2] == BOX_ON_GOAL)
+            return;
+
+        // Push the box
+        board[r2][c2] = board[r2][c2] == GOAL ? BOX_ON_GOAL : BOX;
+        board[r][c] = board[r][c] == BOX_ON_GOAL ? PLAYER_ON_GOAL : PLAYER;
         break;
-    case FLOOR:
-        // Simple move
-        board[pr][pc] = board[pr][pc] == PLAYER_ON_GOAL ? GOAL : FLOOR;
-        board[r][c] = PLAYER;
-        pr = r;
-        pc = c;
-        break;
-    case GOAL:
-        board[pr][pc] = board[pr][pc] == PLAYER_ON_GOAL ? GOAL : FLOOR;
-        board[r][c] = PLAYER_ON_GOAL;
-        pr = r;
-        pc = c;
-        // Simple move
     default:
+        // This should never happen!
         break;
     }
+
+    // Set the board based on where the player WAS
+    board[pr][pc] = board[pr][pc] == PLAYER_ON_GOAL ? GOAL : FLOOR;
+    pr = r;
+    pc = c;
 }
 
 void move()
