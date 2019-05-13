@@ -60,8 +60,38 @@ namespace ParseLevels
             bool rotate = height > width;
 
             char[,] level = new char[8,16];
+            for(int row = 0; row < 8; row++)
+            {
+                for(int col = 0; col < 16; col++)
+                {
+                    level[row,col] = ' ';
+                }
+            }
+
+            int r = 0;
+            foreach(string row in puzzle)
+            {
+                for(int c = 0; c < row.Length; c++)
+                {
+                    if(rotate)
+                        level[c, r] = row[c];
+                    else
+                        level[r, c] = row[c];
+                }
+                r++;
+            }
 
             Console.WriteLine($"// {pack} level {name}");
+            Console.WriteLine();
+            for(int row = 0; row < 8; row++)
+            {
+                for(int col = 0; col < 16; col++)
+                {
+                    Console.Write($"'{level[row,col]}', ");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
         }
 
         static int longestLine(IEnumerable<string> puzzle) =>
