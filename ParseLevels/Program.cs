@@ -8,6 +8,7 @@ namespace ParseLevels
     class Program
     {
         static Dictionary<char, byte> TileMap { get; } = CreateTileMap();
+        static int Count { get; set; } = 0;
 
         static void Main(string[] args)
         {
@@ -56,15 +57,17 @@ namespace ParseLevels
             }
 
             Console.WriteLine($"// {pack} level {name}");
-            Console.WriteLine();
+            Console.WriteLine($"const char Level{Count++,3:000}[] PROGMEM = {{");
             for(int row = 0; row < 8; row++)
             {
+                Console.Write("    ");
                 for(int col = 0; col < 16; col++)
                 {
                     Console.Write($"0x{level[row,col]:X2}, ");
                 }
                 Console.WriteLine();
             }
+            Console.WriteLine("};");
             Console.WriteLine();
         }
 
