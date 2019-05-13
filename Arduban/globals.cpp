@@ -1,6 +1,7 @@
 #include "globals.h"
 
 Arduboy2 arduboy;
+Sprites sprites;
 
 byte gameState = STATE_GAME_INTRO;
 

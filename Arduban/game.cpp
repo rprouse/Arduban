@@ -1,5 +1,6 @@
 #include "game.h"
 #include "levels.h"
+#include "images.h"
 
 // The current board/level we are playing
 char board[ROWS][COLUMNS];
@@ -96,8 +97,29 @@ void drawBoard()
     {
         for(int8_t c = 0; c < COLUMNS; c++)
         {
-            arduboy.setCursor(c * (WIDTH / COLUMNS), r * (HEIGHT / ROWS));
-            arduboy.print(board[r][c]);
+            uint8_t x = c * WIDTH / COLUMNS;
+            uint8_t y = r * HEIGHT / ROWS;
+            switch (board[r][c])
+            {
+            case FLOOR:
+                break;
+            case PLAYER:
+            case PLAYER_ON_GOAL:
+                sprites.drawSelfMasked(x, y, Player, 0);
+                break;
+            case WALL:
+                sprites.drawSelfMasked(x, y, Wall, 0);
+                break;
+            case BOX:
+                sprites.drawSelfMasked(x, y, Box, 0);
+                break;
+            case BOX_ON_GOAL:
+                sprites.drawSelfMasked(x, y, BoxOnGoal, 0);
+                break;
+            case GOAL:
+                sprites.drawSelfMasked(x, y, Goal, 0);
+                break;
+            }
         }
     }
 }
