@@ -51,11 +51,14 @@ namespace ParseLevels
         static void ParsePuzzle(string pack, string name, List<string> puzzle)
         {
             byte[,] level = GetLevel(puzzle);
-            if(level == null)
+            if(level != null)
             {
-                return;
+                OutputLevel(pack, name, level);
             }
+        }
 
+        static void OutputLevel(string pack, string name, byte[,] level)
+        {
             Console.WriteLine($"// {pack} level {name}");
             Console.WriteLine($"const char Level{Count++,3:000}[] PROGMEM = {{");
             for(int row = 0; row < 8; row++)
