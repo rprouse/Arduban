@@ -54,7 +54,8 @@ namespace ParseLevels
             byte[,] level = GetLevel(puzzle);
             if(level != null)
             {
-                OutputLevel(pack, name, level);
+                List<List<byte>> rle = RunLengthEncodeLevel(level);
+                OutputLevel(pack, name, rle);
             }
         }
 
@@ -68,16 +69,16 @@ namespace ParseLevels
             Console.WriteLine("};");
         }
 
-        static void OutputLevel(string pack, string name, byte[,] level)
+        static void OutputLevel(string pack, string name, List<List<byte>> rle)
         {
             Console.WriteLine($"// {pack} level {name}");
             Console.WriteLine($"const char Level{Count++,3:000}[] PROGMEM = {{");
-            for(int row = 0; row < 8; row++)
+            foreach(List<byte> row in rle)
             {
                 Console.Write("    ");
-                for(int col = 0; col < 16; col++)
+                foreach(byte b in row)
                 {
-                    Console.Write($"0x{level[row,col]:X2}, ");
+                    Console.Write($"0x{b:X2}, ");
                 }
                 Console.WriteLine();
             }
@@ -125,6 +126,36 @@ namespace ParseLevels
                 r++;
             }
             return level;
+        }
+
+        static List<List<byte>> RunLengthEncodeLevel(byte[,] level)
+        {
+            List<List<byte>> rle = new List<List<byte>>(8);
+
+            for(int row = 0; row < 8; row++)
+            {
+                var list = new List<byte>();
+                rle.Add(list);
+                byte last = level[row, 0];
+                byte count = 0; // Count is zero based
+                for(int col = 1; col < 16; col++)
+                {
+                    if(level[row, col] != last)
+                    {
+                        list.Add((byte)(((int)count << 4) | (int)last));
+                        last = level[row, col];
+                        count = 0;
+                    }
+                    else
+                    {
+                        count++;
+                    }
+                }
+                list.Add((byte)(((int)count << 4) | (int)last));
+
+                if(row == 7) list.Add(0x00);
+            }
+            return rle;
         }
 
         static int longestLine(IEnumerable<string> puzzle) =>
