@@ -2,9 +2,14 @@
 #include "levels.h"
 #include "images.h"
 
+#define FRAMES_TO_RESET 90
+#define EXPLODE_FRAMES    6
+
 // The current board/level we are playing
 byte board[ROWS][COLUMNS];
 uint16_t moves = 0;
+uint8_t reset_count = 0;
+bool exploded = false;
 
 // Player column and row
 int8_t pr = 0;
@@ -75,9 +80,43 @@ void move(int8_t x, int8_t y)
     moves++;
 }
 
+// This will reset the level after 3 seconds of the A button being held down
+void reset()
+{
+    if (exploded) return;
+
+    reset_count++;
+    if(reset_count > FRAMES_TO_RESET)
+    {
+        gameState = STATE_LEVEL_INIT;
+        exploded = true;
+        reset_count = 0;
+        return;
+    }
+    if(reset_count < FRAMES_TO_RESET * 0.9)
+        arduboy.setRGBled(reset_count * 255 / FRAMES_TO_RESET, 0, 0);
+    else
+        arduboy.setRGBled(255, 255, 255);
+}
+
+void undo()
+{
+
+}
+
 void move()
 {
-    if(arduboy.justPressed(UP_BUTTON))
+    if(arduboy.justReleased(A_BUTTON))
+    {
+        arduboy.setRGBled(0, 0, 0);
+        exploded = false;
+        reset_count = 0;
+    }
+    else if(arduboy.pressed(A_BUTTON))
+        reset();
+    else if(arduboy.justPressed(A_BUTTON))
+        undo();
+    else if(arduboy.justPressed(UP_BUTTON))
         move(0, -1);
     else if(arduboy.justPressed(DOWN_BUTTON))
         move(0, 1);
@@ -85,8 +124,6 @@ void move()
         move(1, 0);
     else if(arduboy.justPressed(LEFT_BUTTON))
         move(-1, 0);
-    else if(arduboy.justPressed(A_BUTTON))
-        gameState = STATE_LEVEL_INIT;
     else if(arduboy.justPressed(B_BUTTON))
         gameState = STATE_GAME_INTRO;
 }
@@ -119,7 +156,14 @@ void drawBoard()
                 break;
             case PLAYER:
             case PLAYER_ON_GOAL:
-                sprites.drawSelfMasked(x, y, Player, frame / 20 % 4);
+                if(reset_count > 0)
+                {
+                    sprites.drawSelfMasked(x, y, Explode, reset_count / (FRAMES_TO_RESET / EXPLODE_FRAMES));
+                }
+                else
+                {
+                    sprites.drawSelfMasked(x, y, Player, frame / 20 % 4);
+                }
                 break;
             case WALL:
                 sprites.drawSelfMasked(x, y, Wall, 0);
