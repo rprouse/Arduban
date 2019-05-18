@@ -250,12 +250,13 @@ void levelSolved()
     arduboy.print("Level ");
     arduboy.print(level);
     arduboy.println(" solved in");
-    arduboy.println();
     arduboy.print(moves);
     arduboy.println(" moves!");
     arduboy.println();
-    arduboy.println("Press A");
-    if(arduboy.justPressed(A_BUTTON))
+    arduboy.println("A to go to the next");
+    arduboy.println("level, B to return");
+    arduboy.println("to the main menu.");
+    if (arduboy.justPressed(A_BUTTON))
     {
         if(level < max_levels)
         {
@@ -266,5 +267,9 @@ void levelSolved()
         {
             gameState = STATE_GAME_OVER;
         }
+    }
+    else if (arduboy.justPressed(B_BUTTON))
+    {
+        gameState = STATE_GAME_INTRO;
     }
 }
