@@ -97,6 +97,8 @@ void reset()
         arduboy.setRGBled(reset_count * 255 / FRAMES_TO_RESET, 0, 0);
     else
         arduboy.setRGBled(255, 255, 255);
+
+    sound.tone(NOTE_C3 + reset_count, 250);
 }
 
 void undo()
