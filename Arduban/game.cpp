@@ -21,7 +21,10 @@ void move(int8_t x, int8_t y)
     int8_t c = pc + x;
 
     if(offScreen(r,c))
+    {
+        sound.tone(NOTE_C1, 250);
         return;
+    }
 
     switch (board[r][c])
     {
@@ -29,8 +32,10 @@ void move(int8_t x, int8_t y)
         return;
     case FLOOR:
         board[r][c] = PLAYER;
+        sound.tone(NOTE_C3, 250);
         break;
     case GOAL:
+        sound.tone(NOTE_E3, 250);
         board[r][c] = PLAYER_ON_GOAL;
         break;
     case BOX:
@@ -39,11 +44,20 @@ void move(int8_t x, int8_t y)
         uint8_t r2 = r + y;
         uint8_t c2 = c + x;
 
-        if(offScreen(r2,c2))
+        if(offScreen(r2,c2) ||
+           board[r2][c2] == WALL ||
+           board[r2][c2] == BOX ||
+           board[r2][c2] == BOX_ON_GOAL)
+        {
+            sound.tone(NOTE_C1, 250);
             return;
+        }
 
-        if(board[r2][c2] == WALL || board[r2][c2] == BOX || board[r2][c2] == BOX_ON_GOAL)
-            return;
+        if(board[r2][c2] == GOAL)
+            sound.tone(NOTE_C3, 250, NOTE_E2, 250);
+        else
+            sound.tone(NOTE_C3, 250);
+
 
         // Push the box
         board[r2][c2] = board[r2][c2] == GOAL ? BOX_ON_GOAL : BOX;
@@ -178,6 +192,7 @@ void gamePlay()
     move();
     if(isSolved())
     {
+        sound.tone(NOTE_C4, 250, NOTE_E4, 250);
         gameState = STATE_LEVEL_SOLVED;
     }
     drawBoard();

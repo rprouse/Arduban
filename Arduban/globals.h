@@ -3,6 +3,7 @@
 
 #include <Arduino.h>
 #include <Arduboy2.h>
+#include <ArduboyTones.h>
 
 // For serial port debugging
 #define DEBUG 0
@@ -17,6 +18,7 @@
 #define ROWS                8
 
 extern Arduboy2 arduboy;
+extern ArduboyTones sound;
 extern Sprites sprites;
 extern byte gameState;
 extern uint8_t max_levels;

@@ -2,6 +2,7 @@
 #include "levels.h"
 
 Arduboy2 arduboy;
+ArduboyTones sound(arduboy.audio.enabled);
 Sprites sprites;
 
 byte gameState = STATE_GAME_INTRO;
