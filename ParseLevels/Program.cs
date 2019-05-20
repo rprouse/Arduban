@@ -12,38 +12,55 @@ namespace ParseLevels
 
         static void Main(string[] args)
         {
-            if(args.Length != 1 || !File.Exists(args[0]))
+            if(args.Length == 0)
             {
-                Console.WriteLine("Usage: ParseLevels <filename>");
+                Console.WriteLine("Usage: ParseLevels <filename> <filename>");
                 return;
             }
 
-            var pack = Path.GetFileNameWithoutExtension(args[0]);
-            string name = null;
-            List<string> puzzle = new List<string>();
-
-            using(var file = new System.IO.StreamReader(args[0]))
+            foreach(string arg in args)
             {
-                string line = file.ReadLine();
-                while(line != null)
+                if(!File.Exists(arg))
                 {
-                    if(line.StartsWith(";"))
+                    Console.WriteLine($"// Level file {arg} not found");
+                    continue;
+                }
+
+                var pack = Path.GetFileNameWithoutExtension(arg);
+                string name = null;
+                List<string> puzzle = new List<string>();
+
+                using(var file = new System.IO.StreamReader(arg))
+                {
+                    try
                     {
-                        name = line.Substring(2);
-                        puzzle.Clear();
-                    }
-                    else if(string.IsNullOrWhiteSpace(line))
-                    {
-                        if(puzzle.Count > 0)
+                        string line = file.ReadLine();
+                        while(line != null)
                         {
-                            ParsePuzzle(pack, name, puzzle);
+                            if(line.StartsWith(";"))
+                            {
+                                name = line.Substring(2);
+                                puzzle.Clear();
+                            }
+                            else if(string.IsNullOrWhiteSpace(line))
+                            {
+                                if(puzzle.Count > 0)
+                                {
+                                    ParsePuzzle(pack, name, puzzle);
+                                }
+                            }
+                            else
+                            {
+                                puzzle.Add(line);
+                            }
+                            line = file.ReadLine();
                         }
                     }
-                    else
+                    catch(Exception ex)
                     {
-                        puzzle.Add(line);
+                        Console.Error.WriteLine($"Error processing file {arg}");
+                        Console.Error.WriteLine(ex);
                     }
-                    line = file.ReadLine();
                 }
             }
             OutputLevels();
@@ -59,6 +76,7 @@ namespace ParseLevels
             }
         }
 
+        /// <summary>Outputs the level list</summary>
         static void OutputLevels()
         {
             Console.WriteLine("const char* const levels[] PROGMEM = {");
@@ -69,6 +87,7 @@ namespace ParseLevels
             Console.WriteLine("};");
         }
 
+        /// <summary>Outputs one level to the console</summary
         static void OutputLevel(string pack, string name, List<List<byte>> rle)
         {
             Console.WriteLine($"// {pack} level {name}");
