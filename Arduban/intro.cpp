@@ -1,4 +1,5 @@
 #include "intro.h"
+#include "memory.h"
 
 void gameIntro()
 {

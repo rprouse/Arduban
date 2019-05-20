@@ -1,6 +1,7 @@
 #include "game.h"
 #include "levels.h"
 #include "images.h"
+#include "memory.h"
 
 #define NOTE_LENGTH         150
 #define FRAMES_TO_RESET      90
@@ -337,6 +338,10 @@ void loadLevel()
     findPlayer();
     gameState = STATE_GAME_PLAY;
     moves = 0;
+    undoCount = 0;
+    reset_count = 0;
+
+    setLevel(level);
 }
 
 void gamePlay()
@@ -376,6 +381,7 @@ void levelSolved()
     }
     else if (arduboy.justPressed(B_BUTTON))
     {
+        level++;
         gameState = STATE_GAME_INTRO;
     }
 }

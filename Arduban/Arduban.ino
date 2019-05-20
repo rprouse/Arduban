@@ -6,6 +6,7 @@
 #include "intro.h"
 #include "game.h"
 #include "over.h"
+#include "memory.h"
 
 typedef void (*FunctionPointer)();
 
@@ -27,6 +28,8 @@ void setup()
 
   arduboy.begin();
   arduboy.setFrameRate(60);
+  initEEPROM();
+  level = getLevel();
 }
 
 void loop()
