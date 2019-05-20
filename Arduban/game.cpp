@@ -5,7 +5,7 @@
 #define NOTE_LENGTH         150
 #define FRAMES_TO_RESET      90
 #define EXPLODE_FRAMES        6
-#define MAX_UNDO             10
+#define MAX_UNDO            128
 
 // The current board/level we are playing
 byte board[ROWS][COLUMNS];
@@ -13,6 +13,7 @@ uint16_t moves = 0;
 uint8_t reset_count = 0;
 bool exploded = false;
 byte undoBuffer[MAX_UNDO];
+uint8_t undoCount = 0;
 
 // Player column and row
 int8_t pr = 0;
@@ -90,6 +91,9 @@ void move(int8_t x, int8_t y)
         undoBuffer[moves % MAX_UNDO] = 'd';
     else if(y == -1)
         undoBuffer[moves % MAX_UNDO] = 'u';
+
+    if(undoCount < MAX_UNDO)
+        undoCount++;
 }
 
 // This will reset the level after FRAMES_TO_RESET of the A button being held down
@@ -115,10 +119,12 @@ void reset()
 
 void undo(int8_t x, int8_t y)
 {
+#if DEBUG
     Serial.print("Undo ");
     Serial.print(x);
     Serial.print(", ");
     Serial.println(y);
+#endif
 
     int8_t r = pr + y;
     int8_t c = pc + x;
@@ -138,8 +144,10 @@ void undo(int8_t x, int8_t y)
     case BOX_ON_GOAL:
     default:
         // This should never happen!
+#if DEBUG
         Serial.print("Invalid square ");
         Serial.println(board[r][c]);
+#endif
         return;
     }
 
@@ -164,10 +172,12 @@ void undo(int8_t x, int8_t y)
     pr = r;
     pc = c;
     moves--;
+    undoCount--;
 }
 
 void undo()
 {
+#if DEBUG
     Serial.println("Undo buffer;");
     for(int i = 0; i < MAX_UNDO; i++)
     {
@@ -180,6 +190,11 @@ void undo()
     Serial.print(moves % MAX_UNDO);
     Serial.print(", ");
     Serial.println((char)undoBuffer[moves % MAX_UNDO]);
+#endif
+
+    if(undoCount == 0)
+        return; // No more undos left
+
     switch(undoBuffer[moves % MAX_UNDO])
     {
         case 'l':
@@ -201,18 +216,15 @@ void move()
 {
     if(arduboy.justPressed(A_BUTTON))
         undo();
-
-    if(arduboy.pressed(A_BUTTON))
+    else if(arduboy.pressed(A_BUTTON))
         reset();
-
-    if(arduboy.justReleased(A_BUTTON))
+    else if(arduboy.justReleased(A_BUTTON))
     {
         arduboy.setRGBled(0, 0, 0);
         exploded = false;
         reset_count = 0;
     }
-
-    if(arduboy.justPressed(UP_BUTTON))
+    else if(arduboy.justPressed(UP_BUTTON))
         move(0, -1);
     else if(arduboy.justPressed(DOWN_BUTTON))
         move(0, 1);

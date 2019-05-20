@@ -4,6 +4,24 @@ An attempt at a [Sokoban](http://sokobano.de/wiki/index.php?title=Main_Page) clo
 for the [Arduboy](https://arduboy.com/). It uses levels created by
 [David W. Skinner](http://www.abelmartin.com/rj/sokobanJS/Skinner/David%20W.%20Skinner%20-%20Sokoban.htm).
 
+## Playing
+
+The objective of the game is to move the man, pushing all of the boxes onto the
+goal squares.
+
+### Up, Down, Left, Right Buttons
+
+- Move the man.
+
+### A Button
+
+- Single press will undo one move up to a max of 128 moves
+- Hold down to explode the man and reset the level
+
+### B Button
+
+- Return to the main screen
+
 ## ParseLevels
 
 This .NET Core program takes levels in a simple TXT format and converts them

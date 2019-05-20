@@ -6,7 +6,7 @@
 #include <ArduboyTones.h>
 
 // For serial port debugging
-#define DEBUG               1
+#define DEBUG               0
 
 #define STATE_GAME_INTRO    0
 #define STATE_LEVEL_INIT    1
