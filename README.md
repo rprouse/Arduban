@@ -9,7 +9,36 @@ for the [Arduboy](https://arduboy.com/). It uses levels created by
 The objective of the game is to move the man, pushing all of the boxes onto the
 goal squares.
 
+### Player
 
+Our trusty player, ready and willing to push boxes around for a living!
+
+![Player](./Assets/Images/Player.png)
+
+### Box
+
+These are the objective, push these onto the goals.
+
+![Box](./Assets/Images/Box.png)
+
+### Goal
+
+This is where you want to push the boxes to.
+
+![Goal](./Assets/Images/Goal.png)
+
+### Box on Goal
+
+This is the objective of the game, move boxes onto the goals in the least moves
+possible.
+
+![Box on Goal](./Assets/Images/BoxOnGoal.png)
+
+### Wall
+
+You can't move here...
+
+![Wall](./Assets/Images/Wall.png)
 
 ### Up, Down, Left, Right Buttons
 
