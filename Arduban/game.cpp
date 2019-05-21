@@ -337,6 +337,7 @@ void loadLevel()
     }
 
     findPlayer();
+    arduboy.setRGBled(0, 0, 0);
     gameState = STATE_GAME_PLAY;
     moves = 0;
     undoCount = 0;
