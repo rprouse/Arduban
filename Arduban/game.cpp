@@ -39,8 +39,6 @@ void move(int8_t x, int8_t y)
 
     switch (board[r][c])
     {
-    case WALL:
-        return;
     case FLOOR:
         board[r][c] = PLAYER;
         sound.tone(NOTE_C3, NOTE_LENGTH);
@@ -51,31 +49,32 @@ void move(int8_t x, int8_t y)
         break;
     case BOX:
     case BOX_ON_GOAL:
-        // Need to look one square further then push box
-        uint8_t r2 = r + y;
-        uint8_t c2 = c + x;
-
-        if(offScreen(r2,c2) ||
-           board[r2][c2] == WALL ||
-           board[r2][c2] == BOX ||
-           board[r2][c2] == BOX_ON_GOAL)
         {
-            sound.tone(NOTE_C1, NOTE_LENGTH);
-            return;
+            // Need to look one square further then push box
+            uint8_t r2 = r + y;
+            uint8_t c2 = c + x;
+
+            if(offScreen(r2,c2) ||
+            board[r2][c2] == WALL ||
+            board[r2][c2] == BOX ||
+            board[r2][c2] == BOX_ON_GOAL)
+            {
+                sound.tone(NOTE_C1, NOTE_LENGTH);
+                return;
+            }
+
+            if(board[r2][c2] == GOAL)
+                sound.tone(NOTE_C3, NOTE_LENGTH, NOTE_E2, NOTE_LENGTH);
+            else
+                sound.tone(NOTE_C3, NOTE_LENGTH);
+
+            // Push the box
+            board[r2][c2] = board[r2][c2] == GOAL ? BOX_ON_GOAL : BOX;
+            board[r][c] = board[r][c] == BOX_ON_GOAL ? PLAYER_ON_GOAL : PLAYER;
         }
-
-        if(board[r2][c2] == GOAL)
-            sound.tone(NOTE_C3, NOTE_LENGTH, NOTE_E2, NOTE_LENGTH);
-        else
-            sound.tone(NOTE_C3, NOTE_LENGTH);
-
-
-        // Push the box
-        board[r2][c2] = board[r2][c2] == GOAL ? BOX_ON_GOAL : BOX;
-        board[r][c] = board[r][c] == BOX_ON_GOAL ? PLAYER_ON_GOAL : PLAYER;
         break;
+    case WALL:
     default:
-        // This should never happen!
         return;
     }
 
