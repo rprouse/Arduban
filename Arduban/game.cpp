@@ -2,6 +2,7 @@
 #include "levels.h"
 #include "images.h"
 #include "memory.h"
+#include "encourage.h"
 
 #define NOTE_LENGTH         150
 #define FRAMES_TO_RESET      90
@@ -16,6 +17,8 @@ bool exploded = false;
 byte undoBuffer[MAX_UNDO];
 uint8_t undoCount = 0;
 uint16_t bestScore = 0xFFFF;
+
+const char* encouragement;
 
 // Player column and row
 int8_t pr = 0;
@@ -250,6 +253,7 @@ bool isSolved()
     }
     setMoves(level, moves);
     arduboy.setRGBled(0, 128, 0);
+    encouragement = getRandomEncouragement();
     return true;
 }
 
@@ -363,19 +367,19 @@ void levelSolved()
 {
     sprites.drawSelfMasked(8, 35, ManAndBox, 0);
 
-    arduboy.setCursor(0, 5);
-    arduboy.print(F("Level "));
-    arduboy.print(level);
-    arduboy.println(F(" solved in "));
-    arduboy.print(moves);
-    arduboy.println(F(" moves"));
-    arduboy.println();
+    arduboy.setCursor(8, 3);
+    arduboy.print(encouragement);
+
+    font4x6.setCursor(8, 13);
+    font4x6.print(moves);
+    font4x6.print(F(" moves for level "));
+    font4x6.print(level);
 
     if(bestScore != 0xFFFF)
     {
-        arduboy.print(F("Previous best "));
-        arduboy.print(bestScore);
-        arduboy.println("");
+        font4x6.setCursor(8, 23);
+        font4x6.print(F("Previous best was "));
+        font4x6.print(bestScore);
     }
 
     if (arduboy.justPressed(A_BUTTON))

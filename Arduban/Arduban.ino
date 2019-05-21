@@ -23,6 +23,7 @@ void setup()
   Serial.begin(9600);  // For debugging and screenshotting
 
   arduboy.begin();
+  arduboy.initRandomSeed();
   arduboy.setFrameRate(60);
   initEEPROM();
   level = getLevel();
