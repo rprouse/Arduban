@@ -20,11 +20,7 @@ const FunctionPointer PROGMEM gameStates[] = {
 
 void setup()
 {
-#if DEBUG
-  Serial.begin(115200);  // For debugging :)
-  while(!Serial);
-  Serial.println("OK");
-#endif
+  Serial.begin(9600);  // For debugging and screenshotting
 
   arduboy.begin();
   arduboy.setFrameRate(60);
@@ -40,6 +36,9 @@ void loop()
   arduboy.pollButtons();
   arduboy.clear();
   ((FunctionPointer)pgm_read_word(&gameStates[gameState]))();
+
+  // For screenshots
+  Serial.write(arduboy.getBuffer(), 128 * 64 / 8);
   arduboy.display();
 
   frame++;

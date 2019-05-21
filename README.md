@@ -6,6 +6,14 @@ for the [Arduboy](https://arduboy.com/). It uses levels created by
 [4x6 Font by Filmote](https://github.com/filmote/Font4x6) which is under the
 BSD-3 license.
 
+Intro Screen
+
+![Intro Screen](./Assets/Images/Intro.png)
+
+Level 8
+
+![Level 8](./Assets/Images/Level8.png)
+
 ## Playing
 
 The objective of the game is to move the man, pushing all of the boxes onto the
