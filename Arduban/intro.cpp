@@ -4,7 +4,8 @@
 
 void gameIntro()
 {
-    sprites.drawSelfMasked(0, 0, Intro, 0);
+    sprites.drawSelfMasked(8, 6, Arduban, 0);
+    sprites.drawSelfMasked(8, 35, ManAndBox, 0);
 
     font4x6.setCursor(77, 40);
     font4x6.print(F("Level "));
