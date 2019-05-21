@@ -249,6 +249,7 @@ bool isSolved()
         }
     }
     setMoves(level, moves);
+    arduboy.setRGBled(0, 128, 0);
     return true;
 }
 
@@ -388,10 +389,12 @@ void levelSolved()
         {
             gameState = STATE_GAME_OVER;
         }
+        arduboy.setRGBled(0, 0, 0);
     }
     else if (arduboy.justPressed(B_BUTTON))
     {
         level++;
         gameState = STATE_GAME_INTRO;
+        arduboy.setRGBled(0, 0, 0);
     }
 }
