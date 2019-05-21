@@ -360,6 +360,8 @@ void gamePlay()
 
 void levelSolved()
 {
+    sprites.drawSelfMasked(8, 35, ManAndBox, 0);
+
     arduboy.setCursor(0, 5);
     arduboy.print(F("Level "));
     arduboy.print(level);
@@ -375,9 +377,6 @@ void levelSolved()
         arduboy.println("");
     }
 
-    arduboy.setCursor(0, 43);
-    arduboy.println(F("Press A - Next level"));
-    arduboy.println(F("Press B - Main menu"));
     if (arduboy.justPressed(A_BUTTON))
     {
         if(level < max_levels)
