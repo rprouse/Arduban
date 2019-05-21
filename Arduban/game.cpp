@@ -15,6 +15,7 @@ uint8_t reset_count = 0;
 bool exploded = false;
 byte undoBuffer[MAX_UNDO];
 uint8_t undoCount = 0;
+uint16_t bestScore = 0xFFFF;
 
 // Player column and row
 int8_t pr = 0;
@@ -248,6 +249,7 @@ bool isSolved()
                 return false;
         }
     }
+    setMoves(level, moves);
     return true;
 }
 
@@ -342,6 +344,7 @@ void loadLevel()
     reset_count = 0;
 
     setLevel(level);
+    bestScore = getMoves(level);
 }
 
 void gamePlay()
@@ -357,16 +360,24 @@ void gamePlay()
 
 void levelSolved()
 {
-    arduboy.setCursor(0, 10);
-    arduboy.print("Level ");
+    arduboy.setCursor(0, 5);
+    arduboy.print(F("Level "));
     arduboy.print(level);
-    arduboy.println(" solved in");
+    arduboy.println(F(" solved in "));
     arduboy.print(moves);
-    arduboy.println(" moves!");
+    arduboy.println(F(" moves"));
     arduboy.println();
-    arduboy.println("A to go to the next");
-    arduboy.println("level, B to return");
-    arduboy.println("to the main menu.");
+
+    if(bestScore != 0xFFFF)
+    {
+        arduboy.print(F("Previous best "));
+        arduboy.print(bestScore);
+        arduboy.println("");
+    }
+
+    arduboy.setCursor(0, 43);
+    arduboy.println(F("Press A - Next level"));
+    arduboy.println(F("Press B - Main menu"));
     if (arduboy.justPressed(A_BUTTON))
     {
         if(level < max_levels)

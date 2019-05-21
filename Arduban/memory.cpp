@@ -48,3 +48,27 @@ uint8_t getLevel()
 {
     return (uint8_t)EEPROM.read(EEPROM_LAST_LEVEL);
 }
+
+void setMoves(uint8_t level, uint16_t moves)
+{
+    uint16_t prev = getMoves(level);
+    if(prev == 0xFFFF || moves < prev)
+    {
+        uint16_t addr = EEPROM_LEVEL_START + level * 2;
+        EEPROM.update(addr, highByte(moves));
+        EEPROM.update(addr + 1, lowByte(moves));
+    }
+}
+
+uint16_t getMoves(uint8_t level)
+{
+    uint16_t addr = EEPROM_LEVEL_START + level * 2;
+    byte high = EEPROM.read(addr);
+    byte low = EEPROM.read(addr+1);
+    return (uint16_t)high << 8 | low;
+}
+
+bool isLevelSolved(uint8_t level)
+{
+    return getMoves(level) == 0xFFFF;
+}

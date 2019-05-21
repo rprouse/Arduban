@@ -4,12 +4,23 @@
 void gameIntro()
 {
     arduboy.setCursor(0, 10);
-    arduboy.println("Welcome to Arduban");
+    arduboy.println(F("Arduban by Rob Prouse"));
     arduboy.println();
-    arduboy.print("Level ");
+    arduboy.print(F("Level "));
     arduboy.println(level);
-    arduboy.println();
-    arduboy.println("Press A to START");
+    uint16_t moves = getMoves(level);
+    if(moves == 0xFFFF)
+    {
+        arduboy.println(F("Unsolved"));
+    }
+    else
+    {
+        arduboy.print(moves);
+        arduboy.println(F(" moves"));
+    }
+
+    arduboy.setCursor(0, 50);
+    arduboy.println(F("Press A - Start level"));
     if(arduboy.justPressed(A_BUTTON))
         gameState = STATE_LEVEL_INIT;
     else if(arduboy.justPressed(UP_BUTTON) && level > 1)
