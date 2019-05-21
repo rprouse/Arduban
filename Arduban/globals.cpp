@@ -4,6 +4,7 @@
 Arduboy2 arduboy;
 ArduboyTones sound(arduboy.audio.enabled);
 Sprites sprites;
+Font4x6 font4x6 = Font4x6();
 
 byte gameState = STATE_GAME_INTRO;
 

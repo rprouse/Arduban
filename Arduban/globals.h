@@ -4,6 +4,7 @@
 #include <Arduino.h>
 #include <Arduboy2.h>
 #include <ArduboyTones.h>
+#include "Font4x6.h"
 
 // For serial port debugging
 #define DEBUG               0
@@ -20,6 +21,8 @@
 extern Arduboy2 arduboy;
 extern ArduboyTones sound;
 extern Sprites sprites;
+extern Font4x6 font4x6;
+
 extern byte gameState;
 extern uint8_t max_levels;
 extern uint8_t level;

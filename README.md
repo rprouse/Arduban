@@ -2,7 +2,9 @@
 
 An attempt at a [Sokoban](http://sokobano.de/wiki/index.php?title=Main_Page) clone
 for the [Arduboy](https://arduboy.com/). It uses levels created by
-[David W. Skinner](http://www.abelmartin.com/rj/sokobanJS/Skinner/David%20W.%20Skinner%20-%20Sokoban.htm).
+[David W. Skinner](http://www.abelmartin.com/rj/sokobanJS/Skinner/David%20W.%20Skinner%20-%20Sokoban.htm). This game makes use of the
+[4x6 Font by Filmote](https://github.com/filmote/Font4x6) which is under the
+BSD-3 license.
 
 ## Playing
 

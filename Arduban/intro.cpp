@@ -1,26 +1,27 @@
 #include "intro.h"
+#include "images.h"
 #include "memory.h"
 
 void gameIntro()
 {
-    arduboy.setCursor(0, 10);
-    arduboy.println(F("Arduban by Rob Prouse"));
-    arduboy.println();
-    arduboy.print(F("Level "));
-    arduboy.println(level);
+    sprites.drawSelfMasked(0, 0, Intro, 0);
+
+    font4x6.setCursor(77, 40);
+    font4x6.print(F("Level "));
+    font4x6.print(level);
+
+    font4x6.setCursor(83, 48);
     uint16_t moves = getMoves(level);
     if(moves == 0xFFFF)
     {
-        arduboy.println(F("Unsolved"));
+        font4x6.print(F("Unsolved"));
     }
     else
     {
-        arduboy.print(moves);
-        arduboy.println(F(" moves"));
+        font4x6.print(moves);
+        font4x6.print(F(" moves"));
     }
 
-    arduboy.setCursor(0, 50);
-    arduboy.println(F("Press A - Start level"));
     if(arduboy.justPressed(A_BUTTON))
         gameState = STATE_LEVEL_INIT;
     else if(arduboy.justPressed(UP_BUTTON) && level > 1)
