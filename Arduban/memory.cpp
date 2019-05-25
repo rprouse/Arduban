@@ -73,5 +73,5 @@ uint16_t getMoves(uint16_t level)
 
 bool isLevelSolved(uint16_t level)
 {
-    return getMoves(level) == 0xFFFF;
+    return getMoves(level) != 0xFFFF;
 }

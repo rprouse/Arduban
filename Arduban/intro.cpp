@@ -24,11 +24,35 @@ void gameIntro()
     }
 
     if(arduboy.justPressed(A_BUTTON))
+    {
+        sound.tone(NOTE_C3, NOTE_LENGTH);
         gameState = STATE_LEVEL_INIT;
+    }
     else if(arduboy.justPressed(B_BUTTON))
+    {
+        sound.tone(NOTE_C3, NOTE_LENGTH);
         gameState = STATE_SETTINGS;
+    }
     else if(arduboy.justPressed(UP_BUTTON) && level > 1)
+    {
+        sound.tone(NOTE_C3, NOTE_LENGTH);
         level--;
+    }
     else if(arduboy.justPressed(DOWN_BUTTON) && level < max_levels)
+    {
+        sound.tone(NOTE_C3, NOTE_LENGTH);
         level++;
+    }
+    else if(arduboy.justPressed(LEFT_BUTTON))
+    {
+        sound.tone(NOTE_C3, NOTE_LENGTH);
+        while(level > 1 && isLevelSolved(level))
+            level--;
+    }
+    else if(arduboy.justPressed(RIGHT_BUTTON))
+    {
+        sound.tone(NOTE_C3, NOTE_LENGTH);
+        while(level < max_levels && isLevelSolved(level))
+            level++;
+    }
 }
