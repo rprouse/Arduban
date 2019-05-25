@@ -38,8 +38,10 @@ void loop()
   arduboy.clear();
   ((FunctionPointer)pgm_read_word(&gameStates[gameState]))();
 
+#if !DEBUG
   // For screenshots
   Serial.write(arduboy.getBuffer(), 128 * 64 / 8);
+#endif
   arduboy.display();
 
   frame++;

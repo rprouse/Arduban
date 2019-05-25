@@ -7,15 +7,29 @@
 #define NOTE_LENGTH         150
 #define FRAMES_TO_RESET      90
 #define EXPLODE_FRAMES        6
+
+// Undo buffer defines
+#define UP      0x01
+#define DOWN    0x02
+#define LEFT    0x04
+#define RIGHT   0x08
+#define PUSH    0x10
+#define MOVE    0x00
+
+#if DEBUG
+#define MAX_UNDO             10
+#else
 #define MAX_UNDO            128
+#endif
+
+byte undoBuffer[MAX_UNDO];
+uint8_t undoCount = 0;
 
 // The current board/level we are playing
 byte board[ROWS][COLUMNS];
 uint16_t moves = 0;
 uint8_t reset_count = 0;
 bool exploded = false;
-byte undoBuffer[MAX_UNDO];
-uint8_t undoCount = 0;
 uint16_t bestScore = 0xFFFF;
 
 const char* encouragement;
@@ -45,10 +59,14 @@ void move(int8_t x, int8_t y)
     case FLOOR:
         board[r][c] = PLAYER;
         sound.tone(NOTE_C3, NOTE_LENGTH);
+        moves++;
+        undoBuffer[moves % MAX_UNDO] = MOVE;
         break;
     case GOAL:
         sound.tone(NOTE_E3, NOTE_LENGTH);
         board[r][c] = PLAYER_ON_GOAL;
+        moves++;
+        undoBuffer[moves % MAX_UNDO] = MOVE;
         break;
     case BOX:
     case BOX_ON_GOAL:
@@ -67,13 +85,15 @@ void move(int8_t x, int8_t y)
             }
 
             if(board[r2][c2] == GOAL)
-                sound.tone(NOTE_C3, NOTE_LENGTH, NOTE_E2, NOTE_LENGTH);
+                sound.tone(NOTE_C3, NOTE_LENGTH, NOTE_E3, NOTE_LENGTH);
             else
                 sound.tone(NOTE_C3, NOTE_LENGTH);
 
             // Push the box
             board[r2][c2] = board[r2][c2] == GOAL ? BOX_ON_GOAL : BOX;
             board[r][c] = board[r][c] == BOX_ON_GOAL ? PLAYER_ON_GOAL : PLAYER;
+            moves++;
+            undoBuffer[moves % MAX_UNDO] = PUSH;
         }
         break;
     case WALL:
@@ -85,16 +105,15 @@ void move(int8_t x, int8_t y)
     board[pr][pc] = board[pr][pc] == PLAYER_ON_GOAL ? GOAL : FLOOR;
     pr = r;
     pc = c;
-    moves++;
 
     if(x == 1)
-        undoBuffer[moves % MAX_UNDO] = 'l';
+        undoBuffer[moves % MAX_UNDO] |= LEFT;
     else if(x == -1)
-        undoBuffer[moves % MAX_UNDO] = 'r';
+        undoBuffer[moves % MAX_UNDO] |= RIGHT;
     else if(y == 1)
-        undoBuffer[moves % MAX_UNDO] = 'd';
+        undoBuffer[moves % MAX_UNDO] |= DOWN;
     else if(y == -1)
-        undoBuffer[moves % MAX_UNDO] = 'u';
+        undoBuffer[moves % MAX_UNDO] |= UP;
 
     if(undoCount < MAX_UNDO)
         undoCount++;
@@ -121,13 +140,15 @@ void reset()
     sound.tone(NOTE_C3 + reset_count, NOTE_LENGTH);
 }
 
-void undo(int8_t x, int8_t y)
+void undo(int8_t x, int8_t y, bool push)
 {
 #if DEBUG
-    Serial.print("Undo ");
+    Serial.print("Undo x=");
     Serial.print(x);
-    Serial.print(", ");
-    Serial.println(y);
+    Serial.print(", y=");
+    Serial.print(y);
+    Serial.print(", p=");
+    Serial.println(push);
 #endif
 
     int8_t r = pr + y;
@@ -161,7 +182,7 @@ void undo(int8_t x, int8_t y)
     // Are we pulling a box?
     int8_t br = pr - y;
     int8_t bc = pc - x;
-    if(board[br][bc] == BOX || board[br][bc] == BOX_ON_GOAL)
+    if(push && board[br][bc] == BOX || board[br][bc] == BOX_ON_GOAL)
     {
         if(board[pr][pc] == GOAL)
             sound.tone(NOTE_C3, NOTE_LENGTH, NOTE_E2, NOTE_LENGTH);
@@ -179,13 +200,33 @@ void undo(int8_t x, int8_t y)
     undoCount--;
 }
 
+#if DEBUG
+void printUndo(byte move)
+{
+    if(move == 0x00)
+    {
+        Serial.print("--");
+        return;
+    }
+    Serial.print((move & PUSH) == PUSH ? 'P' : 'M');
+    if((move & LEFT) == LEFT)
+        Serial.print('L');
+    else if((move & RIGHT) == RIGHT)
+        Serial.print('R');
+    else if((move & DOWN) == DOWN)
+        Serial.print('D');
+    else if((move & UP) == UP)
+        Serial.print('U');
+}
+#endif
+
 void undo()
 {
 #if DEBUG
     Serial.println("Undo buffer;");
     for(int i = 0; i < MAX_UNDO; i++)
     {
-        Serial.print(undoBuffer[i]);
+        printUndo(undoBuffer[i]);
         Serial.print(", ");
     }
     Serial.println();
@@ -193,27 +234,23 @@ void undo()
     Serial.print("Undo move ");
     Serial.print(moves % MAX_UNDO);
     Serial.print(", ");
-    Serial.println((char)undoBuffer[moves % MAX_UNDO]);
+    printUndo(undoBuffer[moves % MAX_UNDO]);
+    Serial.println();
 #endif
 
     if(undoCount == 0)
         return; // No more undos left
 
-    switch(undoBuffer[moves % MAX_UNDO])
-    {
-        case 'l':
-            undo(-1, 0);
-            break;
-        case 'r':
-            undo(1, 0);
-            break;
-        case 'd':
-            undo(0, -1);
-            break;
-        case 'u':
-            undo(0, 1);
-            break;
-    }
+    byte move = undoBuffer[moves % MAX_UNDO];
+    bool push = (move & PUSH) == PUSH;
+    if((move & LEFT) == LEFT)
+        undo(-1, 0, push);
+    else if((move & RIGHT) == RIGHT)
+        undo(1, 0, push);
+    else if((move & DOWN) == DOWN)
+        undo(0, -1, push);
+    else if((move & UP) == UP)
+        undo(0, 1, push);
 }
 
 void move()
