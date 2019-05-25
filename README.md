@@ -4,7 +4,7 @@ An attempt at a [Sokoban](http://sokobano.de/wiki/index.php?title=Main_Page) clo
 for the [Arduboy](https://arduboy.com/). It uses levels created by
 [David W. Skinner](http://www.abelmartin.com/rj/sokobanJS/Skinner/David%20W.%20Skinner%20-%20Sokoban.htm). This game makes use of the
 [4x6 Font by Filmote](https://github.com/filmote/Font4x6) which is under the
-BSD-3 license.
+BSD-3 license. This game is under the [MIT License](LICENSE).
 
 Intro Screen
 
@@ -17,7 +17,51 @@ Level 8
 ## Playing
 
 The objective of the game is to move the man, pushing all of the boxes onto the
-goal squares.
+goal squares. You can only push the boxes, you cannot pull them and you can only
+push one box at a time. The game keeps track of the number of moves you've made
+and saves your best scores (lowest number of moves) for each level.
+
+## Controls
+
+### Intro Screen
+
+|       |                                         |
+|-------|-----------------------------------------|
+| A     | Opens the currently selected level      |
+| B     | Opens the settings screen               |
+| UP    | Selects the previous level              |
+| DOWN  | Selects the next level                  |
+| LEFT  | Selects the previous **unsolved** level |
+| RIGHT | Selects the next **unsolved** level     |
+
+### Game Screen
+
+|       |                                              |
+|-------|----------------------------------------------|
+| A     | Undo one move. Hold for 5 sec to reset level |
+| B     | Returns to the Intro screen                  |
+| UP    | Moves the player up                          |
+| DOWN  | Moves the player down                        |
+| LEFT  | Moves the player left                        |
+| RIGHT | Moves the player right                       |
+
+### Level Solved Screen
+
+|       |                             |
+|-------|-----------------------------|
+| A     | Opens the next level        |
+| B     | Returns to the Intro screen |
+
+### Settings Screen
+
+|       |                               |
+|-------|-------------------------------|
+| A     | Selects the current setting   |
+| B     | Returns to the Intro screen   |
+| UP    | Moves to the previous setting |
+| DOWN  | Moves to the next setting     |
+
+## Images
 
 ### Player
 
@@ -49,19 +93,6 @@ possible.
 You can't move here...
 
 ![Wall](./Assets/Images/Wall.png)
-
-### Up, Down, Left, Right Buttons
-
-- Move the man.
-
-### A Button
-
-- Single press will undo one move up to a max of 128 moves
-- Hold down to explode the man and reset the level
-
-### B Button
-
-- Return to the main screen
 
 ## ParseLevels
 
