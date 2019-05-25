@@ -18,6 +18,10 @@ namespace ParseLevels
                 return;
             }
 
+            Console.WriteLine("#ifndef LEVELS_H");
+            Console.WriteLine("#define LEVELS_H");
+            Console.WriteLine();
+
             foreach(string arg in args)
             {
                 if(!File.Exists(arg))
@@ -64,6 +68,8 @@ namespace ParseLevels
                 }
             }
             OutputLevels();
+            Console.WriteLine();
+            Console.WriteLine("#endif");
         }
 
         static void ParsePuzzle(string pack, string name, List<string> puzzle)
@@ -79,7 +85,7 @@ namespace ParseLevels
         /// <summary>Outputs the level list</summary>
         static void OutputLevels()
         {
-            Console.WriteLine("const char* const levels[] PROGMEM = {");
+            Console.WriteLine("const byte* const levels[] PROGMEM = {");
             for(int l = 0; l < Count; l++)
             {
                 Console.WriteLine($"    Level{l,3:000},");
@@ -91,7 +97,7 @@ namespace ParseLevels
         static void OutputLevel(string pack, string name, List<List<byte>> rle)
         {
             Console.WriteLine($"// {pack} level {name}");
-            Console.WriteLine($"const char Level{Count++,3:000}[] PROGMEM = {{");
+            Console.WriteLine($"const byte Level{Count++,3:000}[] PROGMEM = {{");
             foreach(List<byte> row in rle)
             {
                 Console.Write("    ");
