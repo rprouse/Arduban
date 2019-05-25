@@ -27,12 +27,8 @@ uint8_t undoCount = 0;
 
 // The current board/level we are playing
 byte board[ROWS][COLUMNS];
-uint16_t moves = 0;
 uint8_t reset_count = 0;
 bool exploded = false;
-uint16_t bestScore = 0xFFFF;
-
-const char* encouragement;
 
 // Player column and row
 int8_t pr = 0;
@@ -290,7 +286,7 @@ bool isSolved()
     }
     setMoves(level, moves);
     arduboy.setRGBled(0, 128, 0);
-    encouragement = getRandomEncouragement();
+    setRandomEncouragement();
     return true;
 }
 
@@ -398,44 +394,4 @@ void gamePlay()
         gameState = STATE_LEVEL_SOLVED;
     }
     drawBoard();
-}
-
-void levelSolved()
-{
-    sprites.drawSelfMasked(8, 35, ManAndBox, 0);
-
-    arduboy.setCursor(8, 3);
-    arduboy.print(encouragement);
-
-    font4x6.setCursor(8, 13);
-    font4x6.print(moves);
-    font4x6.print(F(" moves for level "));
-    font4x6.print(level);
-
-    if(bestScore != 0xFFFF)
-    {
-        font4x6.setCursor(8, 23);
-        font4x6.print(F("Previous best was "));
-        font4x6.print(bestScore);
-    }
-
-    if (arduboy.justPressed(A_BUTTON))
-    {
-        if(level < max_levels)
-        {
-            level++;
-            gameState = STATE_LEVEL_INIT;
-        }
-        else
-        {
-            gameState = STATE_GAME_OVER;
-        }
-        arduboy.setRGBled(0, 0, 0);
-    }
-    else if (arduboy.justPressed(B_BUTTON))
-    {
-        level++;
-        gameState = STATE_GAME_INTRO;
-        arduboy.setRGBled(0, 0, 0);
-    }
 }

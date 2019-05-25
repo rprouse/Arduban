@@ -5,10 +5,12 @@ Arduboy2 arduboy;
 ArduboyTones sound(arduboy.audio.enabled);
 Sprites sprites;
 Font4x6 font4x6 = Font4x6();
+uint16_t moves = 0;
+uint16_t bestScore = 0xFFFF;
 
 byte gameState = STATE_GAME_INTRO;
 
-uint8_t max_levels = sizeof(levels) / sizeof(char*);
+uint8_t max_levels = (uint8_t)(sizeof(levels) / sizeof(char*));
 uint8_t level = 1;
 uint8_t frame = 0;
 

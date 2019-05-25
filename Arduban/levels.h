@@ -3583,6 +3583,7 @@ const byte Level295[] PROGMEM = {
 */
 
 const byte* const levels[] PROGMEM = {
+    Level000,
     Level001,
     Level002,
     Level003,
