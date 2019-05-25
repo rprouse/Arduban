@@ -1,12 +1,23 @@
 #include "over.h"
+#include "images.h"
+#include "encourage.h"
 
 void gameOver()
 {
-    arduboy.setCursor(0, 10);
-    arduboy.println(F("All levels complete!"));
+    sprites.drawSelfMasked(8, 35, ManAndBox, 0);
 
-    arduboy.setCursor(0, 50);
-    arduboy.println(F("Press A - Main menu"));
+    if(arduboy.everyXFrames(60))
+        setRandomEncouragement();
+
+    arduboy.setCursor(8, 3);
+    arduboy.print(getRandomEncouragment());
+
+    font4x6.setCursor(8, 13);
+    font4x6.println(F("All levels complete!"));
+
+    font4x6.setCursor(8, 23);
+    font4x6.println(F("Improve your scores?"));
+
     if(arduboy.justPressed(A_BUTTON))
         gameState = STATE_GAME_INTRO;
 }
