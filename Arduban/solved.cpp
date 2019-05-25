@@ -11,13 +11,13 @@ void levelSolved()
 
     font4x6.setCursor(8, 13);
     font4x6.print(moves);
-    font4x6.print(F(" moves for level "));
+    font4x6.print(" moves for level ");
     font4x6.print(level);
 
     if(bestScore != 0xFFFF)
     {
         font4x6.setCursor(8, 23);
-        font4x6.print(F("Previous best was "));
+        font4x6.print("Previous best was ");
         font4x6.print(bestScore);
     }
 

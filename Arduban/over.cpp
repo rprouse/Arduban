@@ -13,10 +13,10 @@ void gameOver()
     arduboy.print(getRandomEncouragment());
 
     font4x6.setCursor(8, 13);
-    font4x6.println(F("All levels complete!"));
+    font4x6.println("All levels complete!");
 
     font4x6.setCursor(8, 23);
-    font4x6.println(F("Improve your scores?"));
+    font4x6.println("Improve your scores?");
 
     if(arduboy.justPressed(A_BUTTON))
         gameState = STATE_GAME_INTRO;
