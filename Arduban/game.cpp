@@ -25,14 +25,8 @@
 byte undoBuffer[MAX_UNDO];
 uint8_t undoCount = 0;
 
-// The current board/level we are playing
-byte board[ROWS][COLUMNS];
 uint8_t reset_count = 0;
 bool exploded = false;
-
-// Player column and row
-int8_t pr = 0;
-int8_t pc = 0;
 
 bool offScreen(int8_t r, int8_t c)
 {
@@ -116,7 +110,7 @@ void move(int8_t x, int8_t y)
 }
 
 // This will reset the level after FRAMES_TO_RESET of the A button being held down
-void reset()
+void explode()
 {
     if (exploded) return;
 
@@ -254,7 +248,7 @@ void move()
     if(arduboy.justPressed(A_BUTTON))
         undo();
     else if(arduboy.pressed(A_BUTTON))
-        reset();
+        explode();
     else if(arduboy.justReleased(A_BUTTON))
     {
         arduboy.setRGBled(0, 0, 0);
@@ -330,61 +324,6 @@ void drawBoard()
     }
 }
 
-// Finds the player in the new board
-void findPlayer()
-{
-    for(int8_t r = 0; r < ROWS; r++)
-    {
-        for(int8_t c = 0; c < COLUMNS; c++)
-        {
-            if(board[r][c] == PLAYER || board[r][c] == PLAYER_ON_GOAL)
-            {
-                pr = r;
-                pc = c;
-                return;
-            }
-        }
-    }
-}
-
-void loadLevel()
-{
-    uint8_t row = 0;
-    uint8_t col = 0;
-    uint8_t i = 0;
-    char b;
-    const __FlashStringHelper * buff = (__FlashStringHelper*)pgm_read_word(&(levels[level-1]));
-
-    memcpy_P(&b, (PGM_P)buff, 1);
-    while(b != 0x00)
-    {
-        i++;
-        if(col >= COLUMNS)
-        {
-            row++;
-            col = 0;
-        }
-
-        byte count = (b & 0xF0) >> 4;
-        byte tile  = b & 0x0F;
-        for(byte i = 0; i <= count; i++)
-        {
-            board[row][col++] = tile;
-        }
-        memcpy_P(&b, (PGM_P)buff + i, 1);
-    }
-
-    findPlayer();
-    arduboy.setRGBled(0, 0, 0);
-    gameState = STATE_GAME_PLAY;
-    moves = 0;
-    undoCount = 0;
-    reset_count = 0;
-
-    setLevel(level);
-    bestScore = getMoves(level);
-}
-
 void gamePlay()
 {
     move();
@@ -394,4 +333,11 @@ void gamePlay()
         gameState = STATE_LEVEL_SOLVED;
     }
     drawBoard();
+}
+
+void reset()
+{
+    moves = 0;
+    undoCount = 0;
+    reset_count = 0;
 }

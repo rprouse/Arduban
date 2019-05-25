@@ -4,6 +4,7 @@
 //
 // License: MIT
 #include "intro.h"
+#include "load.h"
 #include "game.h"
 #include "solved.h"
 #include "over.h"

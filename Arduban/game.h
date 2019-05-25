@@ -3,7 +3,7 @@
 
 #include "globals.h"
 
-void loadLevel();
 void gamePlay();
+void reset();
 
 #endif

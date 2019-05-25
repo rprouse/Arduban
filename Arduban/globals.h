@@ -28,6 +28,9 @@
 #define GOAL            0x06    // .
 #define FLOOR           0x07    //
 
+// The current board/level we are playing
+extern byte board[ROWS][COLUMNS];
+
 extern Arduboy2 arduboy;
 extern ArduboyTones sound;
 extern Sprites sprites;
@@ -39,6 +42,10 @@ extern uint8_t level;
 extern uint8_t frame;
 extern uint16_t moves;
 extern uint16_t bestScore;
+
+// Player column and row
+extern int8_t pr;
+extern int8_t pc;
 
 // Helper function to dump a byte as a hex value to Serial
 void printHex(byte b);

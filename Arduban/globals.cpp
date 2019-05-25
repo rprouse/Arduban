@@ -14,6 +14,13 @@ uint8_t max_levels = (uint8_t)(sizeof(levels) / sizeof(char*));
 uint8_t level = 1;
 uint8_t frame = 0;
 
+// Player column and row
+int8_t pr = 0;
+int8_t pc = 0;
+
+// The current board/level we are playing
+byte board[ROWS][COLUMNS];
+
 #if DEBUG
 // Helper function to dump a byte as a hex value to Serial
 void printHex(byte b)
