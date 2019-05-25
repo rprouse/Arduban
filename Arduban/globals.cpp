@@ -10,8 +10,8 @@ uint16_t bestScore = 0xFFFF;
 
 byte gameState = STATE_GAME_INTRO;
 
-uint8_t max_levels = (uint8_t)(sizeof(levels) / sizeof(char*));
-uint8_t level = 1;
+uint16_t max_levels = (uint16_t)(sizeof(levels) / sizeof(char*));
+uint16_t level = 1;
 uint8_t frame = 0;
 
 // Player column and row

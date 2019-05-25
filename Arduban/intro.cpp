@@ -25,6 +25,8 @@ void gameIntro()
 
     if(arduboy.justPressed(A_BUTTON))
         gameState = STATE_LEVEL_INIT;
+    else if(arduboy.justPressed(B_BUTTON))
+        gameState = STATE_SETTINGS;
     else if(arduboy.justPressed(UP_BUTTON) && level > 1)
         level--;
     else if(arduboy.justPressed(DOWN_BUTTON) && level < max_levels)

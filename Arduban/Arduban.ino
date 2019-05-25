@@ -1,14 +1,10 @@
-// Template for starting Arduboy game projects
-//
-// Thanks to JO3RI for some of the ideas
-//
-// License: MIT
 #include "intro.h"
 #include "load.h"
 #include "game.h"
 #include "solved.h"
 #include "over.h"
 #include "memory.h"
+#include "settings.h"
 
 typedef void (*FunctionPointer)();
 
@@ -17,7 +13,8 @@ const FunctionPointer PROGMEM gameStates[] = {
   loadLevel,
   gamePlay,
   levelSolved,
-  gameOver
+  gameOver,
+  settings
 };
 
 void setup()

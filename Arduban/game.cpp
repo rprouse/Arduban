@@ -4,7 +4,6 @@
 #include "memory.h"
 #include "encourage.h"
 
-#define NOTE_LENGTH         150
 #define FRAMES_TO_RESET      90
 #define EXPLODE_FRAMES        6
 

@@ -17,14 +17,12 @@ void initEEPROM()
 
     // check the first three chars, are they ARB to identify the game? if
     // not reset the EEPROM memory.
-    if(c1 != 'A' || c2 != 'R' || c3 != 'B')
+    if(c1 != 'A' || c2 != 'B' || c3 != 'N')
     {
         // Reset the tag
         EEPROM.update(EEPROM_ID1, 'A');
-        EEPROM.update(EEPROM_ID2, 'R');
-        EEPROM.update(EEPROM_ID3, 'B');
-
-        setLevel(1);
+        EEPROM.update(EEPROM_ID2, 'B');
+        EEPROM.update(EEPROM_ID3, 'N');
 
         resetLevels();
     }
@@ -32,6 +30,8 @@ void initEEPROM()
 
 void resetLevels()
 {
+    setLevel(1);
+
     // Erase the levels
     for(uint16_t addr = EEPROM_LEVEL_START; addr < E2END; addr++)
     {
@@ -39,17 +39,20 @@ void resetLevels()
     }
 }
 
-void setLevel(uint8_t level)
+void setLevel(uint16_t level)
 {
-    EEPROM.update(EEPROM_LAST_LEVEL, level);
+    EEPROM.update(EEPROM_LAST_LEVEL, highByte(level));
+    EEPROM.update(EEPROM_LAST_LEVEL + 1, lowByte(level));
 }
 
-uint8_t getLevel()
+uint16_t getLevel()
 {
-    return (uint8_t)EEPROM.read(EEPROM_LAST_LEVEL);
+    byte high = EEPROM.read(EEPROM_LAST_LEVEL);
+    byte low = EEPROM.read(EEPROM_LAST_LEVEL+1);
+    return (uint16_t)high << 8 | low;
 }
 
-void setMoves(uint8_t level, uint16_t moves)
+void setMoves(uint16_t level, uint16_t moves)
 {
     uint16_t prev = getMoves(level);
     if(prev == 0xFFFF || moves < prev)
@@ -60,7 +63,7 @@ void setMoves(uint8_t level, uint16_t moves)
     }
 }
 
-uint16_t getMoves(uint8_t level)
+uint16_t getMoves(uint16_t level)
 {
     uint16_t addr = EEPROM_LEVEL_START + level * 2;
     byte high = EEPROM.read(addr);
@@ -68,7 +71,7 @@ uint16_t getMoves(uint8_t level)
     return (uint16_t)high << 8 | low;
 }
 
-bool isLevelSolved(uint8_t level)
+bool isLevelSolved(uint16_t level)
 {
     return getMoves(level) == 0xFFFF;
 }

@@ -32,9 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 From https://github.com/filmote/Font4x6
 
-*/
-
-#include <Arduino.h>
+*/#include <Arduino.h>
 #include <Sprites.h>
 #include <Print.h>
 #include "Font4x6.h"
@@ -52,14 +50,26 @@ From https://github.com/filmote/Font4x6
 #define CHAR_LETTER_Z_LOWER 122
 #define CHAR_NUMBER_0 48
 #define CHAR_NUMBER_9 57
+#define CHAR_COLON 58
+#define CHAR_LESS_THAN 60
+#define CHAR_GREATER_THAN 62
+#define CHAR_QUESTION_MARK 63
 
 #ifdef USE_LOWER_CASE
   #define FONT_EXCLAMATION_INDEX 62
   #define FONT_PERIOD_INDEX 63
+  #define FONT_LESS_THAN_INDEX 64
+  #define FONT_GREATER_THAN_INDEX 65
+  #define FONT_QUESTION_MARK_INDEX 66
+  #define FONT_COLON_INDEX 67
   #define FONT_NUMBER_INDEX 52
 #else
   #define FONT_EXCLAMATION_INDEX 36
   #define FONT_PERIOD_INDEX 37
+  #define FONT_LESS_THAN_INDEX 38
+  #define FONT_GREATER_THAN_INDEX 39
+  #define FONT_QUESTION_MARK_INDEX 40
+  #define FONT_COLON_INDEX 41
   #define FONT_NUMBER_INDEX 26
 #endif
 
@@ -131,6 +141,10 @@ const uint8_t PROGMEM font_images[] = {
 0x06,	0x29,	0x29,	0x1E,	//9
 0x00,	0x2F,	0x00,	0x00,	//!
 0x00,	0x20,	0x00,	0x00, //.
+0x00, 0x04, 0x0A, 0x00, // <
+0x00, 0x0A, 0x04, 0x00, // >
+0x02, 0x01, 0x29, 0x06, // ?
+0x00, 0x12, 0x00, 0x00, // :
 };
 
 
@@ -188,6 +202,21 @@ void Font4x6::printChar(const char c, const int8_t x, int8_t y) {
       idx = FONT_PERIOD_INDEX;
       break;
 
+    case CHAR_LESS_THAN:
+      idx = FONT_LESS_THAN_INDEX;
+      break;
+
+    case CHAR_GREATER_THAN:
+      idx = FONT_GREATER_THAN_INDEX;
+      break;
+
+    case CHAR_QUESTION_MARK:
+      idx = FONT_QUESTION_MARK_INDEX;
+      break;
+
+    case CHAR_COLON:
+      idx = FONT_COLON_INDEX;
+      break;
   }
 
   if (idx > -1) {
@@ -215,3 +244,4 @@ void Font4x6::setTextColor(const uint8_t color){
 void Font4x6::setHeight(const uint8_t color){
   _lineHeight = color;
 }
+
