@@ -2,8 +2,29 @@
 #include "images.h"
 #include "memory.h"
 
+bool playedIntro = false;
+
+#define TUNE_NOTE_LENGTH 250
+
+const uint16_t tune[] PROGMEM = {
+    NOTE_C4, TUNE_NOTE_LENGTH,
+    NOTE_E4, TUNE_NOTE_LENGTH,
+    NOTE_G4, TUNE_NOTE_LENGTH,
+    NOTE_F4, TUNE_NOTE_LENGTH,
+    NOTE_E4, TUNE_NOTE_LENGTH,
+    NOTE_F4, TUNE_NOTE_LENGTH,
+    NOTE_C4, TUNE_NOTE_LENGTH * 2,
+    TONES_END
+};
+
 void gameIntro()
 {
+    if(!playedIntro)
+    {
+        playedIntro = true;
+        sound.tones(tune);
+    }
+
     sprites.drawSelfMasked(8, 6, Arduban, 0);
     sprites.drawSelfMasked(8, 35, ManAndBox, 0);
 
