@@ -80,7 +80,7 @@ namespace ParseLevels
         static void OutputLevels()
         {
             Console.WriteLine("const char* const levels[] PROGMEM = {");
-            for(int l = 1; l < Count; l++)
+            for(int l = 0; l < Count; l++)
             {
                 Console.WriteLine($"    Level{l,3:000},");
             }
