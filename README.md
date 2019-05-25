@@ -1,16 +1,19 @@
 # Arduban
 
-An attempt at a [Sokoban](http://sokobano.de/wiki/index.php?title=Main_Page) clone
+A [Sokoban](http://sokobano.de/wiki/index.php?title=Main_Page) clone
 for the [Arduboy](https://arduboy.com/). It uses levels created by
 [David W. Skinner](http://www.abelmartin.com/rj/sokobanJS/Skinner/David%20W.%20Skinner%20-%20Sokoban.htm). This game makes use of the
 [4x6 Font by Filmote](https://github.com/filmote/Font4x6) which is under the
 BSD-3 license. This game is under the [MIT License](LICENSE).
 
-Intro Screen
+The game currently has **295 Levels**. Because there are so many levels, none of
+the levels are locked.
+
+**Intro Screen**
 
 ![Intro Screen](./Assets/Images/Intro.png)
 
-Level 8
+**Level 8**
 
 ![Level 8](./Assets/Images/Level8.png)
 
