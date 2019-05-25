@@ -18,8 +18,8 @@ void clearSettings()
 
 void settings()
 {
-    arduboy.setCursor(0, 10);
-    arduboy.println("Settings");
+    font4x6.setCursor(0, 10);
+    font4x6.println("Settings");
 
     font4x6.setCursor(5, 28);
     font4x6.print(setting == 0 ? '>' : ' ');

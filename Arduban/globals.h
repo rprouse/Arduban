@@ -35,7 +35,7 @@
 // The current board/level we are playing
 extern byte board[ROWS][COLUMNS];
 
-extern Arduboy2 arduboy;
+extern Arduboy2Base arduboy;
 extern ArduboyTones sound;
 extern Sprites sprites;
 extern Font4x6 font4x6;

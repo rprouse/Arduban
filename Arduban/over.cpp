@@ -9,8 +9,8 @@ void gameOver()
     if(arduboy.everyXFrames(60))
         setRandomEncouragement();
 
-    arduboy.setCursor(8, 3);
-    arduboy.print(getRandomEncouragment());
+    font4x6.setCursor(8, 3);
+    font4x6.print(getRandomEncouragment());
 
     font4x6.setCursor(8, 13);
     font4x6.println("All levels complete!");

@@ -1,7 +1,7 @@
 #include "globals.h"
 #include "levels.h"
 
-Arduboy2 arduboy;
+Arduboy2Base arduboy;
 ArduboyTones sound(arduboy.audio.enabled);
 Sprites sprites;
 Font4x6 font4x6 = Font4x6();

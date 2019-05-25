@@ -6,8 +6,8 @@ void levelSolved()
 {
     sprites.drawSelfMasked(8, 35, ManAndBox, 0);
 
-    arduboy.setCursor(8, 3);
-    arduboy.print(getRandomEncouragment());
+    font4x6.setCursor(8, 3);
+    font4x6.print(getRandomEncouragment());
 
     font4x6.setCursor(8, 13);
     font4x6.print(moves);
