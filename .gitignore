@@ -1,4 +1,6 @@
 .vscode/ipch
+.vs
 build
 **/obj
 **/bin
+arduban.arduboy

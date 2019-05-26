@@ -18,9 +18,9 @@ saved progress, **back up your EEPROM**.
 
 ![Intro Screen](./Assets/Images/Intro.png)
 
-**Level 8**
+**Screenshot**
 
-![Level 8](./Assets/Images/Level8.png)
+![Screenshot](./Assets/Install/screenshot00.png)
 
 ## Playing
 
