@@ -21,6 +21,8 @@ namespace ParseLevels
             Console.WriteLine("#ifndef LEVELS_H");
             Console.WriteLine("#define LEVELS_H");
             Console.WriteLine();
+            Console.WriteLine("#include \"globals.h\"");
+            Console.WriteLine();
 
             foreach(string arg in args)
             {
