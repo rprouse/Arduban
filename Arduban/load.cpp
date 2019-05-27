@@ -3,12 +3,15 @@
 #include "memory.h"
 #include "game.h"
 
+// For uint8_t
+#include <stdint.h>
+
 // Finds the player in the new board
 void findPlayer()
 {
-    for(int8_t r = 0; r < ROWS; r++)
+    for(uint8_t r = 0; r < ROWS; r++)
     {
-        for(int8_t c = 0; c < COLUMNS; c++)
+        for(uint8_t c = 0; c < COLUMNS; c++)
         {
             if(board[r][c] == PLAYER || board[r][c] == PLAYER_ON_GOAL)
             {
@@ -22,29 +25,29 @@ void findPlayer()
 
 void loadLevel()
 {
+    const uint8_t * levelData = static_cast<const uint8_t *>(pgm_read_ptr(&levels[level - 1]));
+
     uint8_t row = 0;
-    uint8_t col = 0;
-    uint8_t i = 0;
-    char b;
-    const __FlashStringHelper * buff = (__FlashStringHelper*)pgm_read_word(&(levels[level-1]));
+    uint8_t column = 0;
 
-    memcpy_P(&b, (PGM_P)buff, 1);
-    while(b != 0x00)
+    for(uint8_t data = pgm_read_byte(levelData); data != 0; data = pgm_read_byte(levelData))
     {
-        i++;
-        if(col >= COLUMNS)
+        if(column >= COLUMNS)
         {
-            row++;
-            col = 0;
+            ++row;
+            column = 0;
         }
 
-        byte count = (b & 0xF0) >> 4;
-        byte tile  = b & 0x0F;
-        for(byte i = 0; i <= count; i++)
+        const uint8_t count = ((data >> 4) & 0x0F);
+        const uint8_t tile  = ((data >> 0) & 0x0F);
+
+        for(uint8_t i = 0; i <= count; ++i)
         {
-            board[row][col++] = tile;
+            board[row][column] = tile;
+            ++column;
         }
-        memcpy_P(&b, (PGM_P)buff + i, 1);
+
+        ++levelData;
     }
 
     findPlayer();
