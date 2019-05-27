@@ -132,11 +132,11 @@ void explode()
 void undo(int8_t x, int8_t y, bool push)
 {
 #if DEBUG
-    Serial.print("Undo x=");
+    Serial.print(F("Undo x=");
     Serial.print(x);
-    Serial.print(", y=");
+    Serial.print(F(", y=");
     Serial.print(y);
-    Serial.print(", p=");
+    Serial.print(F(", p=");
     Serial.println(push);
 #endif
 
@@ -159,7 +159,7 @@ void undo(int8_t x, int8_t y, bool push)
     default:
         // This should never happen!
 #if DEBUG
-        Serial.print("Invalid square ");
+        Serial.print(F("Invalid square ");
         Serial.println(board[r][c]);
 #endif
         return;
@@ -194,7 +194,7 @@ void printUndo(byte move)
 {
     if(move == 0x00)
     {
-        Serial.print("--");
+        Serial.print(F("--");
         return;
     }
     Serial.print((move & PUSH) == PUSH ? 'P' : 'M');
@@ -212,17 +212,17 @@ void printUndo(byte move)
 void undo()
 {
 #if DEBUG
-    Serial.println("Undo buffer;");
+    Serial.println(F("Undo buffer;");
     for(int i = 0; i < MAX_UNDO; i++)
     {
         printUndo(undoBuffer[i]);
-        Serial.print(", ");
+        Serial.print(F(", ");
     }
     Serial.println();
 
-    Serial.print("Undo move ");
+    Serial.print(F("Undo move ");
     Serial.print(moves % MAX_UNDO);
-    Serial.print(", ");
+    Serial.print(F(", ");
     printUndo(undoBuffer[moves % MAX_UNDO]);
     Serial.println();
 #endif
