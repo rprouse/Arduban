@@ -2,7 +2,7 @@
 
 #define MAX_ENCOURAGE 20
 
-char encouragement[14];
+FlashStringHelper encouragement;
 
 const char string_01[] PROGMEM = "Stupendous";
 const char string_02[] PROGMEM = "Magnificent";
@@ -35,10 +35,10 @@ const char* const encouragements[] PROGMEM = {
 void setRandomEncouragement()
 {
     uint8_t r = random(0, MAX_ENCOURAGE);
-    strcpy_P(encouragement, (char *)pgm_read_word(&(encouragements[r])));
+    encouragement = readFlashStringPointer(&encouragements[r]);
 }
 
-const char * getRandomEncouragment()
+FlashStringHelper getRandomEncouragment()
 {
     return encouragement;
 }

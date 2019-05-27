@@ -25,7 +25,7 @@ byte board[ROWS][COLUMNS];
 // Helper function to dump a byte as a hex value to Serial
 void printHex(byte b)
 {
-    Serial.print(b < 0x10 ? "0x0" : "0x");
+    Serial.print(b < 0x10 ? F("0x0") : F("0x"));
     Serial.print(b, HEX);
 }
 
