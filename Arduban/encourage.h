@@ -2,8 +2,9 @@
 #define ENCOURAGE_H
 
 #include "globals.h"
+#include "FlashStringHelper.h"
 
 void setRandomEncouragement();
-const char * getRandomEncouragment();
+FlashStringHelper getRandomEncouragment();
 
 #endif
