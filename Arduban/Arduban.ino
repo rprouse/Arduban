@@ -21,7 +21,13 @@ void setup()
 {
   Serial.begin(9600);  // For debugging and screenshotting
 
-  arduboy.begin();
+  arduboy.boot(); // raw hardware
+  arduboy.display(); // blank the display (sBuffer is global, so cleared automatically)
+  arduboy.flashlight(); // light the RGB LED and screen if UP button is being held.
+  // check for and handle buttons held during start up for system control
+  arduboy.systemButtons();
+  arduboy.audio.begin();
+  arduboy.waitNoButtons(); // wait for all buttons to be released
   arduboy.initRandomSeed();
   arduboy.setFrameRate(60);
   initEEPROM();

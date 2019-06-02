@@ -23,6 +23,7 @@ namespace ParseLevels
             Console.WriteLine();
             Console.WriteLine("#include \"globals.h\"");
             Console.WriteLine();
+            Console.WriteLine("const byte Levels[] PROGMEM = {");
 
             foreach(string arg in args)
             {
@@ -53,6 +54,7 @@ namespace ParseLevels
                                 if(puzzle.Count > 0)
                                 {
                                     ParsePuzzle(pack, name, puzzle);
+                                    puzzle.Clear();
                                 }
                             }
                             else
@@ -60,6 +62,11 @@ namespace ParseLevels
                                 puzzle.Add(line);
                             }
                             line = file.ReadLine();
+                        }
+
+                        if(puzzle.Count > 0)
+                        {
+                            ParsePuzzle(pack, name, puzzle);
                         }
                     }
                     catch(Exception ex)
@@ -69,7 +76,7 @@ namespace ParseLevels
                     }
                 }
             }
-            OutputLevels();
+            Console.WriteLine("};");
             Console.WriteLine();
             Console.WriteLine("#endif");
         }
@@ -84,22 +91,10 @@ namespace ParseLevels
             }
         }
 
-        /// <summary>Outputs the level list</summary>
-        static void OutputLevels()
-        {
-            Console.WriteLine("const byte* const levels[] PROGMEM = {");
-            for(int l = 0; l < Count; l++)
-            {
-                Console.WriteLine($"    Level{l,3:000},");
-            }
-            Console.WriteLine("};");
-        }
-
         /// <summary>Outputs one level to the console</summary
         static void OutputLevel(string pack, string name, List<List<byte>> rle)
         {
-            Console.WriteLine($"// {pack} level {name}");
-            Console.WriteLine($"const byte Level{Count++,3:000}[] PROGMEM = {{");
+            Console.WriteLine($"    // Level {++Count} from {pack} level {name}");
             foreach(List<byte> row in rle)
             {
                 Console.Write("    ");
@@ -109,8 +104,6 @@ namespace ParseLevels
                 }
                 Console.WriteLine();
             }
-            Console.WriteLine("};");
-            Console.WriteLine();
         }
 
         static byte[,] GetLevel(List<string> puzzle)
@@ -179,9 +172,9 @@ namespace ParseLevels
                     }
                 }
                 list.Add((byte)(((int)count << 4) | (int)last));
-
-                if(row == 7) list.Add(0x00);
             }
+            byte byteCount = (byte)rle.Sum(row => row.Count());
+            rle.Insert(0, new List<byte> { byteCount });
             return rle;
         }
 
