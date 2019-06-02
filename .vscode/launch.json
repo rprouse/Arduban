@@ -10,7 +10,7 @@
       "request": "launch",
       "preLaunchTask": "build",
       "program": "${workspaceFolder}/ParseLevels/bin/Debug/netcoreapp3.0/ParseLevels.dll",
-      "args": ["${workspaceFolder}/Assets/Levels/Microban.txt"],
+      "args": ["${workspaceFolder}/Assets/Levels/TestLevels.txt"],
       "cwd": "${workspaceFolder}/ParseLevels",
       "console": "internalConsole",
       "stopAtEntry": false
