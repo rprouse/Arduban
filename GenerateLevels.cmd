@@ -1,0 +1,6 @@
+@echo off
+pushd .\ParseLevels
+
+dotnet run -- "C:\src\Arduino\Arduboy\Arduban\Assets\Levels\Microban.txt" "C:\src\Arduino\Arduboy\Arduban\Assets\Levels\Microban II.txt" "C:\src\Arduino\Arduboy\Arduban\Assets\Levels\Microban III.txt" "C:\src\Arduino\Arduboy\Arduban\Assets\Levels\Microban IV.txt" "C:\src\Arduino\Arduboy\Arduban\Assets\Levels\Sasquatch.txt" "C:\src\Arduino\Arduboy\Arduban\Assets\Levels\Sasquatch II.txt" "C:\src\Arduino\Arduboy\Arduban\Assets\Levels\Sasquatch III.txt" "C:\src\Arduino\Arduboy\Arduban\Assets\Levels\Sasquatch IV.txt" "C:\src\Arduino\Arduboy\Arduban\Assets\Levels\Sasquatch V.txt" "C:\src\Arduino\Arduboy\Arduban\Assets\Levels\Sasquatch VI.txt" "C:\src\Arduino\Arduboy\Arduban\Assets\Levels\Sasquatch VII.txt" "C:\src\Arduino\Arduboy\Arduban\Assets\Levels\Sasquatch VIII.txt" "C:\src\Arduino\Arduboy\Arduban\Assets\Levels\Sasquatch IX.txt" "C:\src\Arduino\Arduboy\Arduban\Assets\Levels\Sasquatch X.txt" "C:\src\Arduino\Arduboy\Arduban\Assets\Levels\Sasquatch XI.txt" "C:\src\Arduino\Arduboy\Arduban\Assets\Levels\YoshioMurase.txt" > C:\src\Arduino\Arduboy\Arduban\Arduban\levels.h
+
+popd
