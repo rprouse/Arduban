@@ -59,7 +59,7 @@ void gameIntro()
         sound.tone(NOTE_C3, NOTE_LENGTH);
         level--;
     }
-    else if(arduboy.justPressed(DOWN_BUTTON) && level < max_levels)
+    else if(arduboy.justPressed(DOWN_BUTTON) && level < MAX_LEVELS)
     {
         sound.tone(NOTE_C3, NOTE_LENGTH);
         level++;
@@ -73,7 +73,7 @@ void gameIntro()
     else if(arduboy.justPressed(RIGHT_BUTTON))
     {
         sound.tone(NOTE_C3, NOTE_LENGTH);
-        while(level < max_levels && isLevelSolved(level))
+        while(level < MAX_LEVELS && isLevelSolved(level))
             level++;
     }
 }

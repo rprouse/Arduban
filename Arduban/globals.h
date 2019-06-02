@@ -6,6 +6,9 @@
 #include <ArduboyTones.h>
 #include "Font4x6.h"
 
+// TODO: Set this to the number of levels
+#define MAX_LEVELS 330
+
 // For serial port debugging
 #define DEBUG               0
 
@@ -41,7 +44,6 @@ extern Sprites sprites;
 extern Font4x6 font4x6;
 
 extern byte gameState;
-extern uint16_t max_levels;
 extern uint16_t level;
 extern uint8_t frame;
 extern uint16_t moves;

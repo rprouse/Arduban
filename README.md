@@ -1,7 +1,7 @@
 # Arduban
 
 A [Sokoban](http://sokobano.de/wiki/index.php?title=Main_Page) clone
-for the [Arduboy](https://arduboy.com/). The game currently has **300 Levels**.
+for the [Arduboy](https://arduboy.com/). The game currently has **330 Levels**.
 Because there are so many levels, none of the levels are locked.
 
 **Warning** - This game saves your best score for every level. Because of this,

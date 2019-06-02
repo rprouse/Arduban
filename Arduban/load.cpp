@@ -25,12 +25,17 @@ void findPlayer()
 
 void loadLevel()
 {
-    const uint8_t * levelData = static_cast<const uint8_t *>(pgm_read_ptr(&levels[level - 1]));
+    const uint8_t * levelData = Levels;
+    for(size_t i = level; i > 1; --i)
+    {
+        const uint8_t levelSize = pgm_read_byte(levelData);
+        levelData += levelSize + 1;
+    }
 
     uint8_t row = 0;
     uint8_t column = 0;
 
-    for(uint8_t data = pgm_read_byte(levelData); data != 0; data = pgm_read_byte(levelData))
+    for(uint8_t data = pgm_read_byte(++levelData); row < ROWS; data = pgm_read_byte(levelData))
     {
         if(column >= COLUMNS)
         {
