@@ -1,13 +1,8 @@
 # Arduban
 
 A [Sokoban](http://sokobano.de/wiki/index.php?title=Main_Page) clone
-for the [Arduboy](https://arduboy.com/). It uses levels created by
-[David W. Skinner](http://www.abelmartin.com/rj/sokobanJS/Skinner/David%20W.%20Skinner%20-%20Sokoban.htm) and Yoshio Murase. This game makes use of the
-[4x6 Font by Filmote](https://github.com/filmote/Font4x6) which is under the
-BSD-3 license. This game is under the [MIT License](LICENSE).
-
-The game currently has **300 Levels**. Because there are so many levels, none of
-the levels are locked.
+for the [Arduboy](https://arduboy.com/). The game currently has **300 Levels**.
+Because there are so many levels, none of the levels are locked.
 
 **Warning** - This game saves your best score for every level. Because of this,
 it uses most of the EEPROM memory. This means it will likely overwrite data
@@ -123,3 +118,14 @@ You must have .NET Core 2.1 installed. The utility is run with a command like th
 ```
 dotnet run -- 'C:\src\Arduino\Arduboy\Arduban\Assets\Levels\Microban.txt' 'C:\src\Arduino\Arduboy\Arduban\Assets\Levels\Microban II.txt'  'C:\src\Arduino\Arduboy\Arduban\Assets\Levels\Microban III.txt' 'C:\src\Arduino\Arduboy\Arduban\Assets\Levels\Microban IV.txt' 'C:\src\Arduino\Arduboy\Arduban\Assets\Levels\Sasquatch.txt'  'C:\src\Arduino\Arduboy\Arduban\Assets\Levels\Sasquatch II.txt'  'C:\src\Arduino\Arduboy\Arduban\Assets\Levels\Sasquatch III.txt'  'C:\src\Arduino\Arduboy\Arduban\Assets\Levels\Sasquatch IV.txt'  'C:\src\Arduino\Arduboy\Arduban\Assets\Levels\Sasquatch V.txt'  'C:\src\Arduino\Arduboy\Arduban\Assets\Levels\Sasquatch VI.txt'  'C:\src\Arduino\Arduboy\Arduban\Assets\Levels\Sasquatch VII.txt'  'C:\src\Arduino\Arduboy\Arduban\Assets\Levels\Sasquatch VIII.txt'  'C:\src\Arduino\Arduboy\Arduban\Assets\Levels\Sasquatch IX.txt'  'C:\src\Arduino\Arduboy\Arduban\Assets\Levels\Sasquatch X.txt'  'C:\src\Arduino\Arduboy\Arduban\Assets\Levels\Sasquatch XI.txt'  'C:\src\Arduino\Arduboy\Arduban\Assets\Levels\YoshioMurase.txt' > C:\src\Arduino\Arduboy\Arduban\Arduban\levels.h
 ```
+
+## Credits
+
+The game uses levels created by [David W. Skinner](http://www.abelmartin.com/rj/sokobanJS/Skinner/David%20W.%20Skinner%20-%20Sokoban.htm)
+and Yoshio Murase. This game makes use of the [4x6 Font by Filmote](https://github.com/filmote/Font4x6) which is under the
+BSD-3 license. This game is under the [MIT License](LICENSE).
+
+Thanks to [@Pharap](https://community.arduboy.com/u/Pharap) and
+[@Mr.Blinky](https://community.arduboy.com/u/Mr.Blinky) from the
+[Arduboy Community](https://community.arduboy.com/) for memory reduction ideas
+and help.
